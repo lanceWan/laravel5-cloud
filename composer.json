@@ -1,9 +1,7 @@
 {
     "name": "lancewan/laravel5-cloud",
     "description": "荣联云通讯接口 for laravel5",
-    "type": "library",
     "keywords": ["laravel5","cloud"],
-    "homepage": "https://github.com/lanceWan/laravel5-cloud",
     "license": "MIT",
     "authors": [
         {
