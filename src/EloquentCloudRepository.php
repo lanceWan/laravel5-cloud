@@ -24,15 +24,15 @@ class EloquentCloudRepository implements CloudCommunicationContract
 	private $voIPPassword; 
 	//请求地址，格式如下，不需要写https://
 	private $serverIP;
-	//s请求端口
+	//请求端口
 	private $serverPort;
-	//sEST版本号
+	//REST版本号
 	private $softVersion;
-	//s时间sh
+	//时间sh
 	private $batch;
-	//b包体格式，可填值：json 、xml
+	//包体格式，可填值：json 、xml
 	private $bodyType;
-	//b日志开关。可填值：true、
+	//日志开关。可填值：true、
 	private $enabeLog;
 	//日志文件
 	private $filename="../log.txt";
@@ -62,7 +62,7 @@ class EloquentCloudRepository implements CloudCommunicationContract
 		$this->voIPAccount 		= $this->config->get('cloud.voIPAccount');
 		$this->voIPPassword 	= $this->config->get('cloud.voIPPassword');
 		$this->serverIP 		= $this->config->get('cloud.serverIP');
-		$this->serverPort 		= $this->config->get('cloud.serverPort');
+    $this->serverPort     = $this->config->get('cloud.serverPort');
 		$this->softVersion 		= $this->config->get('cloud.softVersion');
 		$this->bodyType 		= $this->config->get('cloud.bodyType');
 		$this->enabeLog 		= $this->config->get('cloud.enabeLog');
@@ -817,7 +817,7 @@ class EloquentCloudRepository implements CloudCommunicationContract
         $result = $this->curl_post($url,$body,$header);
         $this->showlog("response body = ".$result);
         if($this->bodyType=="json"){//JSON格式
-           $datas=json_decode($result); 
+           $datas=json_decode($result);
         }else{ //xml格式
            $datas = simplexml_load_string(trim($result," \t\n\r"));
         }

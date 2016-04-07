@@ -18,10 +18,10 @@ return [
 	'serverIP' => '',
 	//请求端口
 	'serverPort' => '',
-	//REST版本号
-	'softVersion' => '',
+	//REST版本号 云通讯固定版本号，除非接口升级，外不要修改版本号
+	'softVersion' => '2013-12-26',
 	//包体格式，可填值：json 、xml
-	'bodyType' => 'xml',
+	'bodyType' => 'json',
 	//日志开关。可填值：true
 	'enabeLog' => true,
 
