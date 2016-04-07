@@ -34,6 +34,6 @@ Lance\Cloud\CloudServiceProvider::class,
 And that's it! 
 
 ## 用法
-方法名和云通讯的(测试demo)[http://docs.yuntongxun.com/index.php/Demo%E4%B8%8B%E8%BD%BD]中的方法名一致,所以大家要调用什么功能的时候直接看官方api的方法名就是用本扩展调用. enjoy it!
+方法名和云通讯的[测试demo](http://docs.yuntongxun.com/index.php/Demo%E4%B8%8B%E8%BD%BD)中的方法名一致,所以大家要调用什么功能的时候直接看官方api的方法名就是用本扩展调用. enjoy it!
 ### 主账户信息查询
-...
+完善中...
