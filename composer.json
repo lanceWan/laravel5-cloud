@@ -1,0 +1,19 @@
+{
+    "name": "lancewan/laravel5-cloud",
+    "description": "荣联云通讯接口 for laravel5",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "wanli",
+            "email": "709344897@qq.com"
+        }
+    ],
+    "require": {
+        "php":">5.5.9"
+    },
+    "autoload": { 
+        "psr-4": {
+            "Lance\\Cloud\\": "src/"
+        } 
+    }
+}
