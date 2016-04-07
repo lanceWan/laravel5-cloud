@@ -65,7 +65,7 @@ class CloudHandler
         }
         if($result->statusCode!=0) {
             return ['resultStatus' => false , 'errorCode' => $result->statusCode , 'errorMsg' => $result->statusMsg];
-        } else {resultStatus
+        } else {
         	$account = $result->Account;
            	return [
            		'resultStatus' => true , 
