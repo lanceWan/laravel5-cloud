@@ -125,7 +125,39 @@ class EloquentCloudRepository implements CloudCommunicationContract
 	 */
 	public function createSubAccount($friendlyName)
 	{
-
+		//主帐号鉴权信息验证，对必选参数进行判空。
+        $auth=$this->accAuth();
+        if($auth!=""){
+            return $auth;
+        }
+        // 拼接请求包体
+        if($this->bodyType=="json"){
+           $body= "{'appId':'$this->appId','friendlyName':'$friendlyName'}";
+        }else{
+           $body="<SubAccount>
+                    <appId>$this->appId</appId>
+                    <friendlyName>$friendlyName</friendlyName>
+                  </SubAccount>";
+        }
+        $this->showlog("request body = ".$body);
+        // 大写的sig参数  
+        $sig =  strtoupper(md5($this->accountSid . $this->accountToken . $this->batch));
+        // 生成请求URL
+        $url="https://$this->serverIP:$this->serverPort/$this->softVersion/Accounts/$this->accountSid/SubAccounts?sig=$sig";
+        $this->showlog("request url = ".$url);
+        // 生成授权：主帐号Id + 英文冒号 + 时间戳
+        $authen = base64_encode($this->accountSid . ":" . $this->batch);
+        // 生成包头 
+        $header = array("Accept:application/$this->bodyType","Content-Type:application/$this->bodyType;charset=utf-8","Authorization:$authen");
+        // 发请求
+        $result = $this->curl_post($url,$body,$header);
+        $this->showlog("response body = ".$result);
+        if($this->bodyType=="json"){//JSON格式
+           $datas=json_decode($result); 
+        }else{ //xml格式
+           $datas = simplexml_load_string(trim($result," \t\n\r"));
+        }
+        return $datas;
 	}
 
 	/**
@@ -138,7 +170,41 @@ class EloquentCloudRepository implements CloudCommunicationContract
 	 */
 	public function getSubAccounts($startNo,$offset)
 	{
-
+		//主帐号鉴权信息验证，对必选参数进行判空。
+        $auth=$this->accAuth();
+        if($auth!=""){
+            return $auth;
+        }
+        // 拼接请求包体
+        if($this->bodyType=="json"){
+           $body= "{'appId':'$this->appId','startNo':'$startNo','offset':'$offset'}";
+        }else{
+        	 $body="
+            <SubAccount>
+              <appId>$this->appId</appId>
+              <startNo>$startNo</startNo>  
+              <offset>$offset</offset>
+            </SubAccount>";
+        }
+        $this->showlog("request body = ".$body);
+        // 大写的sig参数  
+        $sig =  strtoupper(md5($this->accountSid . $this->accountToken . $this->batch));
+        // 生成请求URL
+        $url="https://$this->serverIP:$this->serverPort/$this->softVersion/Accounts/$this->accountSid/GetSubAccounts?sig=$sig";
+        $this->showlog("request url = ".$url);
+        // 生成授权：主帐户Id + 英文冒号 + 时间戳。
+        $authen = base64_encode($this->accountSid . ":" . $this->batch);
+        // 生成包头 
+        $header = array("Accept:application/$this->bodyType","Content-Type:application/$this->bodyType;charset=utf-8","Authorization:$authen");
+        // 发送请求
+        $result = $this->curl_post($url,$body,$header);
+        $this->showlog("response body = ".$result);
+        if($this->bodyType=="json"){//JSON格式
+           $datas=json_decode($result); 
+        }else{ //xml格式
+           $datas = simplexml_load_string(trim($result," \t\n\r"));
+        }
+        return $datas;
 	}
 
 	/**
@@ -150,7 +216,40 @@ class EloquentCloudRepository implements CloudCommunicationContract
 	 */
 	public function querySubAccount($friendlyName)
 	{
-
+		//主帐号鉴权信息验证，对必选参数进行判空。
+        $auth=$this->accAuth();
+        if($auth!=""){
+            return $auth;
+        }
+        // 拼接请求包体
+        if($this->bodyType=="json"){
+           $body= "{'appId':'$this->appId','friendlyName':'$friendlyName'}";
+        }else{
+        	 $body="
+            <SubAccount>
+              <appId>$this->appId</appId>
+              <friendlyName>$friendlyName</friendlyName>
+            </SubAccount>";
+        }
+        $this->showlog("request body = ".$body);
+        // 大写的sig参数  
+        $sig =  strtoupper(md5($this->accountSid . $this->accountToken . $this->batch));
+        // 生成请求URL
+        $url="https://$this->serverIP:$this->serverPort/$this->softVersion/Accounts/$this->accountSid/QuerySubAccountByName?sig=$sig";
+        $this->showlog("request url = ".$url);
+        // 生成授权：主帐户Id + 英文冒号 + 时间戳。
+        $authen = base64_encode($this->accountSid . ":" . $this->batch);
+        // 生成包头 
+        $header = array("Accept:application/$this->bodyType","Content-Type:application/$this->bodyType;charset=utf-8","Authorization:$authen");
+        // 发送请求
+        $result = $this->curl_post($url,$body,$header);
+        $this->showlog("response body = ".$result);
+        if($this->bodyType=="json"){//JSON格式
+           $datas=json_decode($result); 
+        }else{ //xml格式
+           $datas = simplexml_load_string(trim($result," \t\n\r"));
+        }
+        return $datas;
 	}
 
 	/**
@@ -164,7 +263,56 @@ class EloquentCloudRepository implements CloudCommunicationContract
 	 */
 	public function sendTemplateSMS($to,$datas,$tempId)
 	{
-
+		//主帐号鉴权信息验证，对必选参数进行判空。
+        $auth=$this->accAuth();
+        if($auth!=""){
+            return $auth;
+        }
+        // 拼接请求包体
+        if($this->bodyType=="json"){
+           $data="";
+           for($i=0;$i<count($datas);$i++){
+              $data = $data. "'".$datas[$i]."',"; 
+           }
+           $body= "{'to':'$to','templateId':'$tempId','appId':'$this->appId','datas':[".$data."]}";
+        }else{
+           $data="";
+           for($i=0;$i<count($datas);$i++){
+              $data = $data. "<data>".$datas[$i]."</data>"; 
+           }
+           $body="<TemplateSMS>
+                    <to>$to</to> 
+                    <appId>$this->appId</appId>
+                    <templateId>$tempId</templateId>
+                    <datas>".$data."</datas>
+                  </TemplateSMS>";
+        }
+        $this->showlog("request body = ".$body);
+        // 大写的sig参数 
+        $sig =  strtoupper(md5($this->accountSid . $this->accountToken . $this->batch));
+        // 生成请求URL        
+        $url="https://$this->serverIP:$this->serverPort/$this->softVersion/Accounts/$this->accountSid/SMS/TemplateSMS?sig=$sig";
+        $this->showlog("request url = ".$url);
+        // 生成授权：主帐户Id + 英文冒号 + 时间戳。
+        $authen = base64_encode($this->accountSid . ":" . $this->batch);
+        // 生成包头  
+        $header = array("Accept:application/$this->bodyType","Content-Type:application/$this->bodyType;charset=utf-8","Authorization:$authen");
+        // 发送请求
+        $result = $this->curl_post($url,$body,$header);
+        $this->showlog("response body = ".$result);
+        if($this->bodyType=="json"){//JSON格式
+           $datas=json_decode($result); 
+        }else{ //xml格式
+           $datas = simplexml_load_string(trim($result," \t\n\r"));
+        }
+        //重新装填数据
+        if($datas->statusCode==0){
+         if($this->bodyType=="json"){
+            $datas->TemplateSMS =$datas->templateSMS;
+            unset($datas->templateSMS);   
+          }
+        }
+        return $datas;
 	}
 
 	/**
@@ -312,7 +460,46 @@ class EloquentCloudRepository implements CloudCommunicationContract
 	 */
 	public function voiceVerify($verifyCode,$playTimes,$to,$displayNum,$respUrl,$lang,$userData)
 	{
-
+		//主帐号鉴权信息验证，对必选参数进行判空。
+        $auth=$this->accAuth();
+        if($auth!=""){
+            return $auth;
+        }
+        // 拼接请求包体
+        if($this->bodyType=="json"){
+           $body= "{'appId':'$this->appId','verifyCode':'$verifyCode','playTimes':'$playTimes','to':'$to','respUrl':'$respUrl','displayNum':'$displayNum',
+           'lang':'$lang','userData':'$userData'}";
+        }else{
+           $body="<VoiceVerify>
+                    <appId>$this->appId</appId>
+                    <verifyCode>$verifyCode</verifyCode>
+                    <playTimes>$playTimes</playTimes>
+                    <to>$to</to>
+                    <respUrl>$respUrl</respUrl>
+                    <displayNum>$displayNum</displayNum>
+                    <lang>$lang</lang>
+                    <userData>$userData</userData>
+                  </VoiceVerify>";
+        }
+        $this->showlog("request body = ".$body);
+        // 大写的sig参数
+        $sig =  strtoupper(md5($this->accountSid . $this->accountToken . $this->batch));
+        // 生成请求URL  
+        $url="https://$this->serverIP:$this->serverPort/$this->softVersion/Accounts/$this->accountSid/Calls/VoiceVerify?sig=$sig";
+        $this->showlog("request url = ".$url);
+        // 生成授权：主帐户Id + 英文冒号 + 时间戳。
+        $authen = base64_encode($this->accountSid . ":" . $this->batch);
+        // 生成包头  
+        $header = array("Accept:application/$this->bodyType","Content-Type:application/$this->bodyType;charset=utf-8","Authorization:$authen");
+        // 发送请求
+        $result = $this->curl_post($url,$body,$header);
+        $this->showlog("response body = ".$result);
+        if($this->bodyType=="json"){//JSON格式
+           $datas=json_decode($result); 
+        }else{ //xml格式
+           $datas = simplexml_load_string(trim($result," \t\n\r"));
+        }
+        return $datas;
 	}
 
 	/**
@@ -326,7 +513,31 @@ class EloquentCloudRepository implements CloudCommunicationContract
 	 */
 	public function ivrDial($number,$userdata,$record)
 	{
-
+		//主帐号鉴权信息验证，对必选参数进行判空。
+        $auth=$this->accAuth();
+        if($auth!=""){
+            return $auth;
+        } 
+       // 拼接请求包体
+        $body=" <Request>
+                  <Appid>$this->appId</Appid>
+                  <Dial number='$number'  userdata='$userdata' record='$record'></Dial>
+                </Request>";
+        $this->showlog("request body = ".$body);
+        // 大写的sig参数
+        $sig =  strtoupper(md5($this->accountSid . $this->accountToken . $this->batch));
+        // 生成请求URL  
+        $url="https://$this->serverIP:$this->serverPort/$this->softVersion/Accounts/$this->accountSid/ivr/dial?sig=$sig";
+        $this->showlog("request url = ".$url);
+        // 生成授权：主帐户Id + 英文冒号 + 时间戳。
+        $authen = base64_encode($this->accountSid . ":" . $this->batch);
+        // 生成包头  
+        $header = array("Accept:application/xml","Content-Type:application/xml;charset=utf-8","Authorization:$authen");
+        // 发送请求
+        $result = $this->curl_post($url,$body,$header);
+        $this->showlog("response body = ".$result);
+        $datas = simplexml_load_string(trim($result," \t\n\r"));
+        return $datas;
 	}
 
 	/**
@@ -339,7 +550,40 @@ class EloquentCloudRepository implements CloudCommunicationContract
 	 */
 	public function billRecords($date,$keywords)
 	{
-
+		//主帐号鉴权信息验证，对必选参数进行判空。
+        $auth=$this->accAuth();
+        if($auth!=""){
+            return $auth;
+        }
+        // 拼接请求包体
+        if($this->bodyType=="json"){
+           $body= "{'appId':'$this->appId','date':'$date','keywords':'$keywords'}";
+        }else{
+           $body="<BillRecords>
+                    <appId>$this->appId</appId>
+                    <date>$date</date>
+                    <keywords>$keywords</keywords>
+                  </BillRecords>";
+        }
+        $this->showlog("request body = ".$body);
+        // 大写的sig参数
+        $sig =  strtoupper(md5($this->accountSid . $this->accountToken . $this->batch));
+        // 生成请求URL  
+        $url="https://$this->serverIP:$this->serverPort/$this->softVersion/Accounts/$this->accountSid/BillRecords?sig=$sig";
+        $this->showlog("request url = ".$url);
+        // 生成授权：主帐户Id + 英文冒号 + 时间戳。
+        $authen = base64_encode($this->accountSid . ":" . $this->batch);
+        // 生成包头  
+        $header = array("Accept:application/$this->bodyType","Content-Type:application/$this->bodyType;charset=utf-8","Authorization:$authen");
+        // 发送请求
+        $result = $this->curl_post($url,$body,$header);
+        $this->showlog("response body = ".$result);
+        if($this->bodyType=="json"){//JSON格式
+           $datas=json_decode($result); 
+        }else{ //xml格式
+           $datas = simplexml_load_string(trim($result," \t\n\r"));
+        }
+        return $datas; 
 	}
 
 	/**
@@ -386,7 +630,39 @@ class EloquentCloudRepository implements CloudCommunicationContract
 	 */
 	public function QuerySMSTemplate($templateId)
 	{
-
+		//主帐号鉴权信息验证，对必选参数进行判空。
+        $auth=$this->accAuth();
+        if($auth!=""){
+            return $auth;
+        }
+        // 拼接请求包体
+        if($this->bodyType=="json"){
+           $body= "{'appId':'$this->appId','templateId':'$templateId'}";
+        }else{
+           $body="<Request>
+                    <appId>$this->appId</appId>
+                    <templateId>$templateId</templateId>  
+                  </Request>";
+        }
+        $this->showlog("request body = ".$body);
+        // 大写的sig参数
+        $sig =  strtoupper(md5($this->accountSid . $this->accountToken . $this->batch));
+        // 生成请求URL  
+        $url="https://$this->serverIP:$this->serverPort/$this->softVersion/Accounts/$this->accountSid/SMS/QuerySMSTemplate?sig=$sig";
+        $this->showlog("request url = ".$url);
+        // 生成授权：主帐户Id + 英文冒号 + 时间戳。
+        $authen = base64_encode($this->accountSid . ":" . $this->batch);
+        // 生成包头  
+        $header = array("Accept:application/$this->bodyType","Content-Type:application/$this->bodyType;charset=utf-8","Authorization:$authen");
+        // 发送请求
+        $result = $this->curl_post($url,$body,$header); 
+        $this->showlog("response body = ".$result);
+        if($this->bodyType=="json"){//JSON格式
+           $datas=json_decode($result); 
+        }else{ //xml格式 
+           $datas = simplexml_load_string(trim($result," \t\n\r"));
+        }
+        return $datas;
 	}
 
 	/**
@@ -398,7 +674,40 @@ class EloquentCloudRepository implements CloudCommunicationContract
 	 */
 	public function CallCancel($callSid,$type)
 	{
-
+		//主帐号鉴权信息验证，对必选参数进行判空。
+        $auth=$this->subAuth();
+        if($auth!=""){
+            return $auth;
+        }
+        // 拼接请求包体
+        if($this->bodyType=="json"){
+           $body= "{'appId':'$this->appId','callSid':'$callSid','type':'$type'}";
+        }else{
+           $body="<CallCancel>
+                    <appId>$this->appId</appId>
+                    <callSid>$callSid</callSid>
+                    <type>$type</type>
+                  </CallCancel>";
+        }
+        $this->showlog("request body = ".$body);
+        // 大写的sig参数
+        $sig =  strtoupper(md5($this->subAccountSid . $this->subAccountToken . $this->batch));
+        // 生成请求URL  
+        $url="https://$this->serverIP:$this->serverPort/$this->softVersion/SubAccounts/$this->subAccountSid/Calls/CallCancel?sig=$sig";
+        $this->showlog("request url = ".$url);
+        // 生成授权：主帐户Id + 英文冒号 + 时间戳。
+        $authen = base64_encode($this->subAccountSid . ":" . $this->batch);
+        // 生成包头  
+        $header = array("Accept:application/$this->bodyType","Content-Type:application/$this->bodyType;charset=utf-8","Authorization:$authen");
+        // 发送请求
+        $result = $this->curl_post($url,$body,$header);
+        $this->showlog("response body = ".$result);
+        if($this->bodyType=="json"){//JSON格式
+           $datas=json_decode($result); 
+        }else{ //xml格式
+           $datas = simplexml_load_string(trim($result," \t\n\r"));
+        }
+        return $datas;
 	}
 
 	/**
@@ -410,7 +719,39 @@ class EloquentCloudRepository implements CloudCommunicationContract
 	 */
 	public function QueryCallState($callid,$action)
 	{
-
+		//主帐号鉴权信息验证，对必选参数进行判空。
+        $auth=$this->accAuth();
+        if($auth!=""){
+            return $auth;
+        }
+        // 拼接请求包体
+        if($this->bodyType=="json"){
+           $body= "{'Appid':'$this->appId','QueryCallState':{'callid':'$callid','action':'$action'}}";
+        }else{
+           $body="<Request>
+                    <Appid>$this->appId</Appid>
+                    <QueryCallState callid ='$callid' action='$action'/>
+                  </Request>";
+        }
+        $this->showlog("request body = ".$body);
+        // 大写的sig参数
+        $sig =  strtoupper(md5($this->accountSid . $this->accountToken . $this->batch));
+        // 生成请求URL  
+        $url="https://$this->serverIP:$this->serverPort/$this->softVersion/Accounts/$this->accountSid/ivr/call?sig=$sig&callid=$callid";
+        $this->showlog("request url = ".$url);
+        // 生成授权：主帐户Id + 英文冒号 + 时间戳。
+        $authen = base64_encode($this->accountSid . ":" . $this->batch);
+        // 生成包头  
+        $header = array("Accept:application/$this->bodyType","Content-Type:application/$this->bodyType;charset=utf-8","Authorization:$authen");
+        // 发送请求
+        $result = $this->curl_post($url,$body,$header);
+        $this->showlog("response body = ".$result);
+        if($this->bodyType=="json"){//JSON格式
+           $datas=json_decode($result); 
+        }else{ //xml格式
+           $datas = simplexml_load_string(trim($result," \t\n\r"));
+        }
+        return $datas;
 	}
 
 	/**
@@ -421,7 +762,29 @@ class EloquentCloudRepository implements CloudCommunicationContract
 	 */
 	public function CallResult($callSid)
 	{
-
+		//主帐号鉴权信息验证，对必选参数进行判空。
+        $auth=$this->accAuth();
+        if($auth!=""){
+            return $auth;
+        }
+        // 大写的sig参数
+        $sig =  strtoupper(md5($this->accountSid . $this->accountToken . $this->batch));
+        // 生成请求URL  
+        $url="https://$this->serverIP:$this->serverPort/$this->softVersion/Accounts/$this->accountSid/CallResult?sig=$sig&callsid=$callSid";
+        $this->showlog("request url = ".$url);
+        // 生成授权：主帐户Id + 英文冒号 + 时间戳。
+        $authen = base64_encode($this->accountSid . ":" . $this->batch);
+        // 生成包头  
+        $header = array("Accept:application/$this->bodyType","Content-Type:application/$this->bodyType;charset=utf-8","Authorization:$authen");
+        // 发送请求
+        $result = $this->curl_post($url,"",$header,0);
+        $this->showlog("response body = ".$result);
+        if($this->bodyType=="json"){//JSON格式
+           $datas=json_decode($result); 
+        }else{ //xml格式
+           $datas = simplexml_load_string(trim($result," \t\n\r"));
+        }
+        return $datas;
 	}
 
 	/**
@@ -433,7 +796,32 @@ class EloquentCloudRepository implements CloudCommunicationContract
 	 */
 	public function MediaFileUpload($filename,$body)
 	{
+		//主帐号鉴权信息验证，对必选参数进行判空。
+        $auth=$this->accAuth();
+        if($auth!=""){
+            return $auth;
+        }
+        // 拼接请求包体
 
+        $this->showlog("request body = ".$body);
+        // 大写的sig参数
+        $sig =  strtoupper(md5($this->accountSid . $this->accountToken . $this->batch));
+        // 生成请求URL  
+        $url="https://$this->ServerIP:$this->ServerPort/$this->SoftVersion/Accounts/$this->accountSid/Calls/MediaFileUpload?sig=$sig&appid=$this->appId&filename=$filename";
+        $this->showlog("request url = ".$url);
+        // 生成授权：主帐户Id + 英文冒号 + 时间戳。
+        $authen = base64_encode($this->accountSid . ":" . $this->batch);
+        // 生成包头  
+        $header = array("Accept:application/$this->bodyType","Content-Type:application/octet-stream","Authorization:$authen");
+        // 发送请求
+        $result = $this->curl_post($url,$body,$header);
+        $this->showlog("response body = ".$result);
+        if($this->bodyType=="json"){//JSON格式
+           $datas=json_decode($result); 
+        }else{ //xml格式
+           $datas = simplexml_load_string(trim($result," \t\n\r"));
+        }
+        return $datas;
 	}
 
 	/**
