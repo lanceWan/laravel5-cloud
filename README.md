@@ -36,7 +36,7 @@ Lance\Cloud\CloudServiceProvider::class,
 And that's it! 
 
 ## cloud.php 配置文件
-`cloud.php`是云通讯的配置信息:
+`cloud.php`是云通讯的配置文件,主要配置信息如下:
 
 ```php
 <?php
@@ -65,42 +65,8 @@ return [
 	'bodyType' => 'json',
 	//日志开关。可填值：true、false
 	'enabeLog' => true,
-
-	/**
-	 * 双向回呼全局配置
-	 * @author 晚黎
-	 * @date   2016-04-06T15:51:59+0800
-	 * @param  [type]   customerSerNum  [被叫侧显示的客服号码]
-	 * @param  [type]   fromSerNum      [主叫侧显示的号码]
-	 * @param  [type]   promptTone      [自定义回拨提示音]
-	 * @param  [type]   alwaysPlay      [第三方私有数据]
-	 * @param  [type]   terminalDtmf    [最大通话时长]
-	 * @param  [type]   userData        [实时话单通知地址]
-	 * @param  [type]   maxCallTime     [是否一直播放提示音]
-	 * @param  [type]   hangupCdrUrl    [用于终止播放promptTone参数定义的提示音]
-	 * @param  [type]   needBothCdr     [是否给主被叫发送话单]
-	 * @param  [type]   needRecord      [是否录音]
-	 * @param  [type]   countDownTime   [设置倒计时时间]
-	 * @param  [type]   countDownPrompt [倒计时时间到后播放的提示音]
-	 *
-	 * 不使用全局配置，局部使用需添加额外参数，例如在控制器中调用：
-	 * Cloud::callBack($from,$to,$options  = []);
-	 * 当传入$options参数时，全局方法不起作用，$options数组中的key对应上面参数说明
-	 */
-	'callBack' => [
-		'customerSerNum'	=> '',
-		'fromSerNum' 		=> '',
-		'promptTone' 		=> '',
-		'alwaysPlay' 		=> '',
-		'terminalDtmf' 		=> '',
-		'userData' 			=> '',
-		'maxCallTime' 		=> '',
-		'hangupCdrUrl' 		=> '',
-		'needBothCdr' 		=> '',
-		'needRecord' 		=> '',
-		'countDownTime'		=> '',
-		'countDownPrompt' 	=> ''
-	]
+	
+	......
 ];
 ```
 
