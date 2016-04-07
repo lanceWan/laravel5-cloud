@@ -18,7 +18,7 @@ return [
 	'serverIP' => '',
 	//请求端口
 	'serverPort' => '',
-	//REST版本号 云通讯固定版本号，除非接口升级，外不要修改版本号
+	//REST版本号 云通讯固定版本号,除非接口升级外,不要修改版本号
 	'softVersion' => '2013-12-26',
 	//包体格式，可填值：json 、xml
 	'bodyType' => 'json',
@@ -42,7 +42,7 @@ return [
 	 * @param  [type]   countDownTime   [设置倒计时时间]
 	 * @param  [type]   countDownPrompt [倒计时时间到后播放的提示音]
 	 *
-	 * 不适用全局配置，局部使用额外参数的，例如在控制器中调用：
+	 * 不使用全局配置，局部使用需添加额外参数，例如在控制器中调用：
 	 * Cloud::callBack($from,$to,$options  = []);
 	 * 当传入$options参数时，全局方法不起作用，$options数组中的key对应上面参数说明
 	 */

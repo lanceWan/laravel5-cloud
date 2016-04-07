@@ -1025,10 +1025,10 @@ body .markdown-body
 <pre><code class="php">composer require lancewan/laravel5-cloud
 </code></pre>
 
-<p>或者加入下面代码到 <code>composer.json</code> 文件:</p>
+<p>或者加入下面代码到 <code>composer.json</code> 文件,并执行<code>composer install</code> :</p>
 <p><pre><code class="php">&quot;lancewan/laravel5-cloud&quot;: &quot;^1.0&quot;
 </code></pre><br />
-用<code>composer</code>加载完成后,在 <code>config/app.php</code> 的文件中加入以下代码:</p>
+扩展包加载完成后,在 <code>config/app.php</code> 的文件中加入以下代码:</p>
 <h3 id="service-provider"><a name="user-content-service-provider" href="#service-provider" class="headeranchor-link" aria-hidden="true"><span class="headeranchor"></span></a>Service Provider</h3>
 <pre><code class="php">Lance\Cloud\CloudServiceProvider::class,
 </code></pre>
