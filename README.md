@@ -83,7 +83,7 @@ $result = Cloud::queryAccountInfo();
 **请求失败**
 ```php
 [
-  "status" => "0"
+  "resultStatus" => "0"
   "errorMsg" => "result error!"
 ]
 ```
@@ -91,7 +91,7 @@ $result = Cloud::queryAccountInfo();
 **验证错误**
 ```php
 [
-	'status' => '0' , 
+	'resultStatus' => '0' , 
 	'errorCode' => '错误码' , 
 	'errorMsg' => '错误信息'
 ]
@@ -100,7 +100,7 @@ $result = Cloud::queryAccountInfo();
 **成功**
 ```php
 [
-	'status' => '1' , 
+	'resultStatus' => '1' , 
 	....
 ]
 ```

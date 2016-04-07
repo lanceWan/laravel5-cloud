@@ -40,13 +40,13 @@ class CloudHandler
 		// 调用回拨接口
         $result = $this->cloud->callBack($from,$to,$options);
         if($result == NULL ) {
-            return ['status' => false,'errorMsg' => 'result error!'];
+            return ['resultStatus' => false,'errorMsg' => 'result error!'];
         }
         if($result->statusCode!=0) {
-            return ['status' => false , 'errorCode' => $result->statusCode , 'errorMsg' => $result->statusMsg];
+            return ['resultStatus' => false , 'errorCode' => $result->statusCode , 'errorMsg' => $result->statusMsg];
         } else {
            $callback = $result->CallBack;
-           return ['status' => true , 'callSid' => $callback->dateCreated , 'dateCreated' => $callback->dateCreated];
+           return ['resultStatus' => true , 'callSid' => $callback->dateCreated , 'dateCreated' => $callback->dateCreated];
       	}    
 	}
 
@@ -61,14 +61,14 @@ class CloudHandler
 		//调用主帐号信息查询接口
 		$result = $this->cloud->queryAccountInfo();
 		if($result == NULL ) {
-            return ['status' => false,'errorMsg' => 'result error!'];
+            return ['resultStatus' => false,'errorMsg' => 'result error!'];
         }
         if($result->statusCode!=0) {
-            return ['status' => false , 'errorCode' => $result->statusCode , 'errorMsg' => $result->statusMsg];
-        } else {
+            return ['resultStatus' => false , 'errorCode' => $result->statusCode , 'errorMsg' => $result->statusMsg];
+        } else {resultStatus
         	$account = $result->Account;
            	return [
-           		'status' => true , 
+           		'resultStatus' => true , 
            		'friendlyName' => $account->friendlyName , 
            		'type' => $account->type,
            		'status' => $account->status,
