@@ -113,6 +113,7 @@ $result = Cloud::queryAccountInfo();
 
 ## 返回值
 调用任何方法后都会返回一个数组,数组中结构如下：
+
 **请求失败**
 ```php
 [
