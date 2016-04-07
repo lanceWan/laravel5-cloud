@@ -22,7 +22,7 @@ return [
 	'softVersion' => '2013-12-26',
 	//包体格式，可填值：json 、xml
 	'bodyType' => 'json',
-	//日志开关。可填值：true
+	//日志开关。可填值：true、false
 	'enabeLog' => true,
 
 	/**

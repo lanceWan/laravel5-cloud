@@ -63,7 +63,7 @@ return [
 	'softVersion' => '2013-12-26',
 	//包体格式，可填值：json 、xml
 	'bodyType' => 'json',
-	//日志开关。可填值：true
+	//日志开关。可填值：true、false
 	'enabeLog' => true,
 
 	/**
@@ -105,9 +105,39 @@ return [
 ```
 
 ## 用法
-方法名和云通讯的[测试demo](http://docs.yuntongxun.com/index.php/Demo%E4%B8%8B%E8%BD%BD)中的方法名一致,所以大家要调用什么功能的时候直接看官方api的方法名就是用本扩展调用. enjoy it!
+方法名和云通讯的[测试demo](http://docs.yuntongxun.com/index.php/Demo%E4%B8%8B%E8%BD%BD)中的方法名一致,所以大家要调用什么功能,直接看官方api的方法名来使用本扩展. enjoy it!
 ### 主账户信息查询
 ```php
 $result = Cloud::queryAccountInfo();
 ```
+
+## 返回值
+调用任何方法后都会返回一个数组,数组中结构如下：
+### 错误信息
+**请求失败**
+```php
+[
+  "status" => "0"
+  "errorMsg" => "result error!"
+]
+```
+
+**验证错误**
+```php
+[
+	'status' => '0' , 
+	'errorCode' => '错误码' , 
+	'errorMsg' => '错误信息'
+]
+```
+
+**成功**
+```php
+[
+	'status' => '1' , 
+	....
+]
+```
+>成功后的返回值都不同,返回的字段参考官方API文档
+
 完善中...
