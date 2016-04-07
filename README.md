@@ -4,6 +4,8 @@
 
 [云通讯官方API文档](http://docs.yuntongxun.com/index.php/%E9%A6%96%E9%A1%B5)
 
+Packagist:[https://packagist.org/packages/lancewan/laravel5-cloud](https://packagist.org/packages/lancewan/laravel5-cloud)
+
 ## 快速安装
 
 通过`composer`来安装
