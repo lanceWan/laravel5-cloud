@@ -72,10 +72,12 @@ return [
 
 ## 用法
 方法名和云通讯的[测试demo](http://docs.yuntongxun.com/index.php/Demo%E4%B8%8B%E8%BD%BD)中的方法名一致,所以大家要调用什么功能,直接看官方api的方法名来使用本扩展. enjoy it!
-### 主账户信息查询
+
+**主账户信息查询**
 ```php
 $result = Cloud::queryAccountInfo();
 ```
+...
 
 ## 返回值
 调用任何方法后都会返回一个数组,数组中结构如下：

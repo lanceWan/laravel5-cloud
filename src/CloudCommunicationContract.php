@@ -154,7 +154,7 @@ interface CloudCommunicationContract{
 	 * @date   2016-04-06T15:58:45+0800
 	 * @param  [type]                   $templateId [模板ID]
 	 */
-	public function QuerySMSTemplate($templateId);
+	public function querySMSTemplate($templateId);
 
 	/**
 	 * 取消回拨
@@ -163,7 +163,7 @@ interface CloudCommunicationContract{
 	 * @param  [type]                   $callSid [一个由32个字符组成的电话唯一标识符]
 	 * @param  [type]                   $type    [0： 任意时间都可以挂断电话；1 ：被叫应答前可以挂断电话，其他时段返回错误代码；2： 主叫应答前可以挂断电话，其他时段返回错误代码；默认值为0。]
 	 */
-	public function CallCancel($callSid,$type);
+	public function callCancel($callSid,$type);
 
 	/**
 	 * 呼叫状态查询
@@ -172,7 +172,7 @@ interface CloudCommunicationContract{
 	 * @param  [type]                   $callid [呼叫Id ]
 	 * @param  [type]                   $action [查询结果通知的回调url地址]
 	 */
-	public function QueryCallState($callid,$action);
+	public function queryCallState($callid,$action);
 
 	/**
 	 * 呼叫结果查询
@@ -180,7 +180,7 @@ interface CloudCommunicationContract{
 	 * @date   2016-04-06T16:00:55+0800
 	 * @param  [type]                   $callSid [呼叫SId]
 	 */
-	public function CallResult($callSid);
+	public function callResult($callSid);
 
 	/**
 	 * 语音文件上传
@@ -189,19 +189,19 @@ interface CloudCommunicationContract{
 	 * @param  [type]                   $filename [文件名]
 	 * @param  [type]                   $body     [二进制串]
 	 */
-	public function MediaFileUpload($filename,$body);
+	public function mediaFileUpload($filename,$body);
 
 	/**
 	 * 子帐号鉴权
 	 * @author 晚黎
 	 * @date   2016-04-06T16:02:07+0800
 	 */
-	// public function subAuth();
+	public function subAuth();
 
 	/**
 	 * 主帐号鉴权
 	 * @author 晚黎
 	 * @date   2016-04-06T16:03:45+0800
 	 */
-	// public function accAuth();
+	public function accAuth();
 }
