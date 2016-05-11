@@ -46,7 +46,7 @@ class CloudHandler
             return ['resultStatus' => false , 'errorCode' => $result->statusCode , 'errorMsg' => $result->statusMsg];
         } else {
            $callback = $result->CallBack;
-           return ['resultStatus' => true , 'callSid' => $callback->dateCreated , 'dateCreated' => $callback->dateCreated];
+           return ['resultStatus' => true , 'callSid' => $callback->callSid , 'dateCreated' => $callback->dateCreated];
       	}    
 	}
 
