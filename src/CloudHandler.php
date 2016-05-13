@@ -218,7 +218,7 @@ class CloudHandler
 	 * @param  [type]                   $userData   [description]
 	 * @return [type]                               [description]
 	 */
-	public function voiceVerify($verifyCode,$to,$playTimes,$displayNum,$respUrl,$lang,$userData)
+	public function voiceVerify($verifyCode,$to,$playTimes = '',$displayNum = 1,$respUrl = '',$lang = 'zh',$userData = '')
 	{
 		//调用语音验证码接口
         $result = $this->cloud->voiceVerify($verifyCode,$to,$playTimes,$displayNum,$respUrl,$lang,$userData);
@@ -309,11 +309,11 @@ class CloudHandler
 		}
 		if($result->statusCode!=0) {
 			return ['resultStatus' => false , 'errorCode' => $result->statusCode , 'errorMsg' => $result->statusMsg];
-    	}else{              
+    	}else{         
     	   	$templateSMS = $result->TemplateSMS;
     	   	return [
            		'resultStatus' => true , 
-           		'templateSMS' => $result->templateSMS
+           		'templateSMS' => $result->TemplateSMS
            	];
     	} 
 	}
